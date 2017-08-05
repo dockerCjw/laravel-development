@@ -1,0 +1,71 @@
+version: '2'
+
+# 服务
+services:
+  # 控制台
+  console:
+    build: ./console
+    volumes:
+      - ./../www/:/var/www
+    tty: true
+
+  # nginx
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      # 把站点挂载到config的sites-enabled配置文件里面
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+      # 挂载nginx的日志
+      - nginx-log:/var/log/nginx
+    volumes_from:
+      - console
+
+  #php-fpm
+  php-fpm:
+    build:  ./php-fpm/
+    volumes_from:
+      - console
+    extra_hosts:
+      - "www.cjwme.com:172.18.0.7"
+
+  # node
+  node:
+    build: ./node
+    environment:
+      WORKSPACE: /var/www
+    ports:
+      - "3000:3000"
+    volumes_from:
+      - console
+
+  # mysql
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: cjw
+      MYSQL_PASSWORD: 123123
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  # redis
+  redis:
+    image: redis:3.2.7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+
+# 匿名数据卷
+volumes:
+  nginx-log:
+    driver: local
+  mysql:
+    driver: local
+  redis:
+    driver: local
