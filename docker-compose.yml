@@ -33,8 +33,6 @@ services:
   # node
   node:
     build: ./node
-    environment:
-      WORKSPACE: /var/www
     ports:
       - "3000:3000"
     volumes_from:
