@@ -13,8 +13,8 @@ RUN apt-get update \
 
 # 第三步 复制 composer
 COPY ./composer.phar /usr/local/bin/composer
-RUN chmod 777 /usr/local/bin/composer \
-    && composer config -g repo.packagist composer https://packagist.phpcomposer.com
+RUN chmod 777 /usr/local/bin/composer
+RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 # 第四步 生成 密钥对 
 RUN ssh-keygen -t rsa -f /root/.ssh/id_rsa
