@@ -7,7 +7,7 @@ COPY ./sources.list /etc/apt/sources.list
 # 第二步 安装php
 RUN apt-get update \
     && apt-get -y install php7.0 \
-    && apt-get -y install php7.0-fpm php-mysql php-curl php-dom php-mbstring  php-gd
+    && apt-get -y install php7.0-fpm php-mysql php-curl php-dom php-mbstring  php-gd php-mongodb php-zip
 
 # 第三步 开启php的扩展
 # 覆盖 php-fpm文件 ，1. 关闭 pid 配置 （ 第17行 ）  2. 关闭守护进程  （ 第82行）
