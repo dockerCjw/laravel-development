@@ -7,9 +7,9 @@ COPY ./sources.list /etc/apt/sources.list
 # 第二步 安装程序
 RUN apt-get update \
     && apt-get -y install openssh-server vim git wget unzip \
-    && apt-get -y install php php-mysql php-curl php-dom php-mbstring \
-    # ifconfig ping 两个命令
+    && apt-get -y install php php-mysql php-curl php-dom php-mbstring php-gd php-mongodb php-zip \
     && apt-get -y install net-tools iputils-ping
+    # ifconfig ping 两个命令
 
 # 第三步 复制 composer
 COPY ./composer.phar /usr/local/bin/composer
