@@ -19,6 +19,11 @@ RUN apt-get update \
     && ln -s /usr/lib/x86_64-linux-gnu/libssl.so  /usr/lib \
     && pecl install mongodb
 
+RUN echo 'extension=mongodb.so' | tee /etc/php/7.0/mods-available/mongodb.ini
+
+RUN ln -s /etc/php/7.0/mods-available/mongodb.ini /etc/php/7.0/fpm/conf.d/ \
+    && ln -s /etc/php/7.0/mods-available/mongodb.ini /etc/php/7.0/cli/conf.d/
+
 COPY ./sources-ali.list /etc/apt/sources.list
 
 # 第三步 开启php的扩展

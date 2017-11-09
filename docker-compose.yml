@@ -8,6 +8,8 @@ services:
     volumes:
       - ./../www/:/var/www
     tty: true
+    ports:
+      - "27017:27017"
 
   # nginx
   nginx:
