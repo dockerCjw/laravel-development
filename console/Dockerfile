@@ -15,7 +15,7 @@ RUN apt-get update \
 COPY ./sources-official.list /etc/apt/sources.list
 RUN apt-get update \
     && apt-get -y install php-pear \
-    && apt-get -y install php5-dev \
+    && apt-get -y install php-dev \
     && apt-get -y install libpcre3-dev \
     && apt-get -y install openssl \
     && ln -s /usr/lib/x86_64-linux-gnu/libssl.so  /usr/lib \

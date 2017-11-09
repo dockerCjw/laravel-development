@@ -2,12 +2,24 @@ FROM ubuntu:16.04
 MAINTAINER chenjiawen <604989282@qq.com>
 
 # 第一步 更换阿里镜像apt源
-COPY ./sources.list /etc/apt/sources.list
+COPY ./sources-ali.list /etc/apt/sources.list
 
 # 第二步 安装php
 RUN apt-get update \
     && apt-get -y install php7.0 \
-    && apt-get -y install php7.0-fpm php-mysql php-curl php-dom php-mbstring  php-gd php-mongodb php-zip
+    && apt-get -y install php7.0-fpm php-mysql php-curl php-dom php-mbstring php-gd php-zip
+
+# 第三步 安装mongodb 扩展 （可以删去）
+COPY ./sources-official.list /etc/apt/sources.list
+RUN apt-get update \
+    && apt-get -y install php-pear \
+    && apt-get -y install php-dev \
+    && apt-get -y install libpcre3-dev \
+    && apt-get -y install openssl \
+    && ln -s /usr/lib/x86_64-linux-gnu/libssl.so  /usr/lib \
+    && pecl install mongodb
+
+COPY ./sources-ali.list /etc/apt/sources.list
 
 # 第三步 开启php的扩展
 # 覆盖 php-fpm文件 ，1. 关闭 pid 配置 （ 第17行 ）  2. 关闭守护进程  （ 第82行）
